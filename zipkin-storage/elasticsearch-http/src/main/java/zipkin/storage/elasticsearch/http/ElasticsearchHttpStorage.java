@@ -205,6 +205,10 @@ public abstract class ElasticsearchHttpStorage extends V2StorageComponent
 
   abstract boolean legacyReadsEnabled();
 
+  @Override public zipkin.internal.v2.storage.SpanStore v2SpanStore() {
+    throw new UnsupportedOperationException("TODO");
+  }
+
   @Override public SpanStore spanStore() {
     return StorageAdapters.asyncToBlocking(asyncSpanStore());
   }
@@ -221,7 +225,7 @@ public abstract class ElasticsearchHttpStorage extends V2StorageComponent
     }
   }
 
-  @Override protected SpanConsumer v2AsyncSpanConsumer() {
+  @Override public SpanConsumer v2SpanConsumer() {
     ensureIndexTemplates();
     return new ElasticsearchHttpSpanConsumer(this);
   }
